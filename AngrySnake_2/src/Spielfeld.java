@@ -11,7 +11,7 @@ public class Spielfeld {
 	private static int row = 7;
 	private static int column = 7;
 	private static int obstacle = 5;
-	private int p1X = 0; // placeholder 
+	private int p1X = 0; // placeholder s
 	private int p1Y = 3; // placeholder 
 	private int p2X = 6; // placeholder 
 	private int p2Y = 3; // placeholder 
@@ -33,8 +33,8 @@ public class Spielfeld {
 		this.initBoard();
 	}
 	
-	// PrEen, ob der Spieler Eerhaupt ZEe hat. Falls keine ZEe vorhanden sind, wird geprEt,
-	// ob es noch freie Felder fE MaulwEfe gibt
+	// PrÂ�Een, ob der Spieler Â�Eerhaupt ZÂ�Ee hat. Falls keine ZÂ�Ee vorhanden sind, wird geprÂ�Et,
+	// ob es noch freie Felder fÂ�E MaulwÂ�Efe gibt
 	public boolean _isRunning(Spieler spieler) {
 		if(this.freeFields == 0) {
 			return false;
@@ -82,7 +82,7 @@ public class Spielfeld {
 			}
 		}
 		if(spieler.getAnzahlMaulwuerfe() > 0) {
-			return true; // Spieler kann sich nicht bewegen, aber MaulwEfe platzieren
+			return true; // Spieler kann sich nicht bewegen, aber MaulwÂ�Efe platzieren
 		}
 		return false;
 	}
