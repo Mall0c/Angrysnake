@@ -106,8 +106,8 @@ public class Spielfeld {
 		int[][] obstaclePos = new int[obstacle][2];
 		for (int i = 0; i < obstacle; i++) {
 			do {
-			obstaclePos[i][0] = (int) (Math.random() * 6);
-			obstaclePos[i][1] = (int) (Math.random() * 6);		
+			obstaclePos[i][0] = (int) (Math.random() * 7);
+			obstaclePos[i][1] = (int) (Math.random() * 7);		
 			} while (!obstacleCheckSuccess(obstaclePos[i][0], obstaclePos[i][1],obstaclePos, i));
 		}
 		// gotta place em after checking
