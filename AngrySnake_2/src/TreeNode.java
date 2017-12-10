@@ -18,9 +18,9 @@ public class TreeNode<T> {
 		return childNode;
 	}
 	
-	private TreeNode<T> generateTree() {
+	//private TreeNode<T> generateTree() {
 		
-	}
+	//}
 	
 	public boolean isRoot() {
 		return parent == null;
