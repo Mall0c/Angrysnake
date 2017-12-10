@@ -1,16 +1,36 @@
 public class boardVal {
 
-	int x1; int y1; int x2; int y2;
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+	int z1;
+	int z2;
 	double heurVal;
-	
-	public boardVal(int x1, int y1, int x2, int y2, double heurVal) {
+	boolean p1;
+
+	// x1 and y1 are the coordinates for the snake head of player 1
+	// x2 and y2 are the coordinates for the snake head of player 2
+	// z1 and z2 are used to reconstruct the last move
+
+	// p1 is to determine whether the node belongs to player 1 or 2
+	// which is later required to know to generate possibleMoves which depend on the
+	// players snake head position
+
+	// so each node contains information about the move, which player the turn
+	// belongs to and where the the two snake heads are right now
+
+	public boardVal(int x1, int y1, int x2, int y2, int z1, int z2, double heurVal, boolean p1) {
 		setX1(x1);
 		setY1(y1);
 		setX2(x2);
 		setY2(y2);
+		setZ1(z1);
+		setZ2(z2);
+		setP1(p1);
 		setHeurVal(heurVal);
 	}
-	
+
 	public int getX1() {
 		return x1;
 	}
@@ -43,11 +63,35 @@ public class boardVal {
 		this.y2 = y2;
 	}
 
+	public int getZ1() {
+		return z1;
+	}
+
+	public void setZ1(int z1) {
+		this.z1 = z1;
+	}
+
+	public int getZ2() {
+		return z2;
+	}
+
+	public void setZ2(int z2) {
+		this.z2 = z2;
+	}
+
 	public double getHeurVal() {
 		return heurVal;
 	}
 
 	public void setHeurVal(double heurVal) {
 		this.heurVal = heurVal;
+	}
+
+	public boolean isP1() {
+		return p1;
+	}
+
+	public void setP1(boolean p1) {
+		this.p1 = p1;
 	}
 }
