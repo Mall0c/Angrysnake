@@ -12,16 +12,16 @@ public class Spielmaster {
 	public void spiel() {
 		boolean gueltigerZug = false;
 		Menu menue = new Menu();
-		int anzahlSpieler = menue.getSpieleranzahl();
+		int anzahlSpieler = menue.getPlayerCount();
 		spielfeld = new Spielfeld(menue.getStoneCount());
 		switch (anzahlSpieler) {
 		case 0:
-			this.spieler1 = new Computerspieler(menue.getName1(), Spieler.types.COMP.ordinal(), menue.getKiLevel01(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiLevel02(), spielfeld);
+			this.spieler1 = new Computerspieler(menue.getName1(), Spieler.types.COMP.ordinal(), menue.getAiLevel01(), spielfeld);
+			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getAiLevel02(), spielfeld);
 			break;
 		case 1:
 			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiLevel01(),spielfeld);
+			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getAiLevel01(),spielfeld);
 			break;
 		// Ob die Eingabe korrekt ist, wird in Menue geprüft, also kann hier default
 		// genommen werden
