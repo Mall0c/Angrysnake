@@ -15,7 +15,7 @@ public class Menu {
 	private String name1 = "Comp1";
 	private String name2 = "Comp2";
 	private int stoneCount = 0;
-	private Scanner scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
 	
 	// constructor
 	public Menu() {
@@ -184,7 +184,7 @@ public class Menu {
 	}
 
 	// don't know why but it is used in Spielmaster so I give him this shit
-	public String getScanner() {
-		return scanner.next();
+	public Scanner getScanner() {
+		return scanner;
 	}
 }
