@@ -11,17 +11,17 @@ public class Spielmaster {
 
 	public void spiel() {
 		boolean gueltigerZug = false;
-		Menue menue = new Menue();
+		Menu menue = new Menu();
 		int anzahlSpieler = menue.getSpieleranzahl();
-		spielfeld = new Spielfeld(menue.getSteine());
+		spielfeld = new Spielfeld(menue.getStoneCount());
 		switch (anzahlSpieler) {
 		case 0:
-			this.spieler1 = new Computerspieler(menue.getName1(), Spieler.types.COMP.ordinal(), menue.getKiStufe1(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiStufe2(), spielfeld);
+			this.spieler1 = new Computerspieler(menue.getName1(), Spieler.types.COMP.ordinal(), menue.getKiLevel01(), spielfeld);
+			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiLevel02(), spielfeld);
 			break;
 		case 1:
 			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiStufe1(),spielfeld);
+			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getKiLevel01(),spielfeld);
 			break;
 		// Ob die Eingabe korrekt ist, wird in Menue geprüft, also kann hier default
 		// genommen werden
@@ -46,7 +46,10 @@ public class Spielmaster {
 					+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler1.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
+				
+				// eingabe = menue.getScanner().next();  Was soll das? Hatte keine getScanner in Menu implementiert, und getScaner.next schon gar nicht?
+				
+				eingabe = menue.getScanner();
 				gueltigerZug = spieler1.zugMachen(eingabe);
 			}
 			gueltigerZug = false;
@@ -64,8 +67,11 @@ public class Spielmaster {
 			+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler2.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
-				gueltigerZug = spieler2.zugMachen(eingabe);
+				
+				// eingabe = menue.getScanner().next();
+				
+				eingabe = menue.getScanner();
+								gueltigerZug = spieler2.zugMachen(eingabe);
 			}
 			gueltigerZug = false;
 		}
