@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TreeNode {
-
+	// Test
 	private boardVal data;
 	private TreeNode parent;
 	private ArrayList<TreeNode> children;
@@ -9,7 +9,7 @@ public class TreeNode {
 	private int depth;
 	private char[][] ogBoard;
 
-	// this is the main constructor which builds our root
+	// this is the main constructor which builds our root 
 	// it requires the already filled board to generate a correct tree
 	// for now I assume that the information inside the root are not important
 	// since they are already included in our board
