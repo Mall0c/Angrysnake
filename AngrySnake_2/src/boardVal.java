@@ -6,7 +6,7 @@ public class boardVal {
 	int y2;
 	int z1;
 	int z2;
-	double heurVal;
+	int heurVal;
 	boolean p1;
 
 	// x1 and y1 are the coordinates for the snake head of player 1
@@ -20,7 +20,7 @@ public class boardVal {
 	// so each node contains information about the move, which player the turn
 	// belongs to and where the the two snake heads are right now
 
-	public boardVal(int x1, int y1, int x2, int y2, int z1, int z2, double heurVal, boolean p1) {
+	public boardVal(int x1, int y1, int x2, int y2, int z1, int z2, int heurVal, boolean p1) {
 		setX1(x1);
 		setY1(y1);
 		setX2(x2);
@@ -29,6 +29,16 @@ public class boardVal {
 		setZ2(z2);
 		setP1(p1);
 		setHeurVal(heurVal);
+	}
+	
+	public boardVal(int x1, int y1, int x2, int y2, int z1, int z2, boolean p1) {
+		setX1(x1);
+		setY1(y1);
+		setX2(x2);
+		setY2(y2);
+		setZ1(z1);
+		setZ2(z2);
+		setP1(p1);
 	}
 
 	public int getX1() {
@@ -79,11 +89,11 @@ public class boardVal {
 		this.z2 = z2;
 	}
 
-	public double getHeurVal() {
+	public int getHeurVal() {
 		return heurVal;
 	}
 
-	public void setHeurVal(double heurVal) {
+	public void setHeurVal(int heurVal) {
 		this.heurVal = heurVal;
 	}
 
