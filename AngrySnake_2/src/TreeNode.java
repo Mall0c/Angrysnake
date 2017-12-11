@@ -22,6 +22,10 @@ public class TreeNode {
 		setOgBoard(board);
 		setChildren(possibleMoves(getOgBoard(), getData(), getDepth()));
 		buildTree();
+		getData().setHeurVal(alphabeta(this, depth));
+		// well somehow we need to convert the integer value to a move
+		// will do that later
+		// search kids for integer value, select said child and read its data to get move
 	}
 
 	public TreeNode(boardVal data, int depth) {
@@ -75,34 +79,68 @@ public class TreeNode {
 		}
 	}
 	
+	// google alpha-beta pruning cause that's what it does
+	// returns an integer which will travel up to root
+	
+	private int alphabeta(TreeNode node, int depth) {
+		return alphabeta(node, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+	
+	private int alphabeta (TreeNode node, int depth, int alpha, int beta) {
+		if (depth == 0 || this.getChildren().size() == 0) {
+			return this.getData().getHeurVal();
+		}
+		if (this.getData().isP1()) {
+			int v = Integer.MIN_VALUE;
+			for (int i = 0; i < this.getChildren().size(); i++) {
+				v = Math.max(v, alphabeta(this.getChildren().get(i), depth - 1, alpha, beta));
+				alpha = Math.max(alpha, v);
+				if (beta <= alpha) {
+					break;
+				}
+			}
+			return v;
+		} else {
+			int v = Integer.MAX_VALUE;
+			for (int i = 0; i < this.getChildren().size(); i++) {
+				v = Math.min(v, alphabeta(this.getChildren().get(i), depth - 1, alpha, beta));
+				beta = Math.max(beta, v);
+				if (beta <= alpha) {
+					break;
+				}
+			}
+			return v;
+		}
+	}
+	
 	// generates the possibleMoves for a single node and saves them as arrayList
 	// there isn't much happening here really
 	// important is that the boolean for player1 gets changed every time by adding a (!)
 
 	private ArrayList<TreeNode> possibleMoves(char[][] field, boardVal pos, int depth) {
 		ArrayList<TreeNode> possibleMoves = new ArrayList<TreeNode>();
-		if (depth > 0) { // ?
+		if (depth >= 0) { // ?
 			if (pos.isP1()) {
 				// top
 				if (field[pos.getX1()][(pos.getY1() + 1) % 7] == ' ') {
 					// top
 					if (field[pos.getX1()][(pos.getY1() + 2) % 7] == ' ') {
 						boardVal nVal = new boardVal(pos.getX1(), ((pos.getY1() + 2) % 7), pos.getX2(), pos.getY2(),
-								pos.getX1(), (pos.getY1() + 1) % 7, 0.0, !pos.isP1());
+								pos.getX1(), (pos.getY1() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// right
 					if (field[(pos.getX1() + 1) % 7][(pos.getY1() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7), ((pos.getY1() + 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX1(), (pos.getY1() + 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX1(), (pos.getY1() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// left
 					if (field[(pos.getX1() - 1) % 7][(pos.getY1() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() - 1) % 7), ((pos.getY1() + 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX1(), (pos.getY1() + 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX1(), (pos.getY1() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -112,21 +150,21 @@ public class TreeNode {
 					// down
 					if (field[pos.getX1()][(pos.getY1() - 2) % 7] == ' ') {
 						boardVal nVal = new boardVal(pos.getX1(), ((pos.getY1() - 2) % 7), pos.getX2(), pos.getY2(),
-								pos.getX1(), (pos.getY1() - 1) % 7, 0.0, !pos.isP1());
+								pos.getX1(), (pos.getY1() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// right
 					if (field[(pos.getX1() + 1) % 7][(pos.getY1() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7), ((pos.getY1() - 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX1(), (pos.getY1() - 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX1(), (pos.getY1() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// left
 					if (field[(pos.getX1() - 1) % 7][(pos.getY1() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() - 1) % 7), ((pos.getY1() - 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX1(), (pos.getY1() - 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX1(), (pos.getY1() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -136,21 +174,21 @@ public class TreeNode {
 					// right
 					if (field[(pos.getX1() + 2) % 7][pos.getY1()] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 2) % 7), pos.getY1(), pos.getX2(), pos.getY2(),
-								(pos.getX1() + 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								(pos.getX1() + 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// top
 					if (field[(pos.getX1() + 1) % 7][(pos.getY1() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7), ((pos.getY1() + 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX1() + 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX1() + 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// down
 					if (field[(pos.getX1() + 1) % 7][(pos.getY1() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7), ((pos.getY1() - 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX1() + 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX1() + 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -160,21 +198,21 @@ public class TreeNode {
 					// left
 					if (field[(pos.getX1() - 2) % 7][pos.getY1()] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() - 2) % 7), pos.getY1(), pos.getX2(), pos.getY2(),
-								(pos.getX1() - 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								(pos.getX1() - 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// top
 					if (field[(pos.getX1() - 1) % 7][(pos.getY1() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() - 1) % 7), ((pos.getY1() + 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX1() - 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX1() - 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// down
 					if (field[(pos.getX1() - 1) % 7][(pos.getY1() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7), ((pos.getY1() - 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX1() - 1) % 7, pos.getY1(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX1() - 1) % 7, pos.getY1(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -185,21 +223,21 @@ public class TreeNode {
 					// top
 					if (field[pos.getX2()][(pos.getY2() + 2) % 7] == ' ') {
 						boardVal nVal = new boardVal(pos.getX2(), ((pos.getY2() + 2) % 7), pos.getX2(), pos.getY2(),
-								pos.getX2(), (pos.getY2() + 1) % 7, 0.0, !pos.isP1());
+								pos.getX2(), (pos.getY2() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// right
 					if (field[(pos.getX2() + 1) % 7][(pos.getY2() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 1) % 7), ((pos.getY2() + 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX2(), (pos.getY2() + 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX2(), (pos.getY2() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// left
 					if (field[(pos.getX2() - 1) % 7][(pos.getY2() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() - 1) % 7), ((pos.getY2() + 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX2(), (pos.getY2() + 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX2(), (pos.getY2() + 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -209,21 +247,21 @@ public class TreeNode {
 					// down
 					if (field[pos.getX2()][(pos.getY2() - 2) % 7] == ' ') {
 						boardVal nVal = new boardVal(pos.getX2(), ((pos.getY2() - 2) % 7), pos.getX2(), pos.getY2(),
-								pos.getX2(), (pos.getY2() - 1) % 7, 0.0, !pos.isP1());
+								pos.getX2(), (pos.getY2() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// right
 					if (field[(pos.getX2() + 1) % 7][(pos.getY2() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 1) % 7), ((pos.getY2() - 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX2(), (pos.getY2() - 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX2(), (pos.getY2() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// left
 					if (field[(pos.getX2() - 1) % 7][(pos.getY2() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() - 1) % 7), ((pos.getY2() - 1) % 7), pos.getX2(),
-								pos.getY2(), pos.getX2(), (pos.getY2() - 1) % 7, 0.0, !pos.isP1());
+								pos.getY2(), pos.getX2(), (pos.getY2() - 1) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -233,21 +271,21 @@ public class TreeNode {
 					// right
 					if (field[(pos.getX2() + 2) % 7][pos.getY2()] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 2) % 7), pos.getY2(), pos.getX2(), pos.getY2(),
-								(pos.getX2() + 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								(pos.getX2() + 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// top
 					if (field[(pos.getX2() + 1) % 7][(pos.getY2() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 1) % 7), ((pos.getY2() + 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX2() + 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX2() + 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// down
 					if (field[(pos.getX2() + 1) % 7][(pos.getY2() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 1) % 7), ((pos.getY2() - 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX2() + 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX2() + 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -257,21 +295,21 @@ public class TreeNode {
 					// left
 					if (field[(pos.getX2() - 2) % 7][pos.getY2()] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() - 2) % 7), pos.getY2(), pos.getX2(), pos.getY2(),
-								(pos.getX2() - 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								(pos.getX2() - 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// top
 					if (field[(pos.getX2() - 1) % 7][(pos.getY2() + 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() - 1) % 7), ((pos.getY2() + 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX2() - 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX2() - 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// down
 					if (field[(pos.getX2() - 1) % 7][(pos.getY2() - 1) % 7] == ' ') {
 						boardVal nVal = new boardVal(((pos.getX2() + 1) % 7), ((pos.getY2() - 1) % 7), pos.getX2(),
-								pos.getY2(), (pos.getX2() - 1) % 7, pos.getY2(), 0.0, !pos.isP1());
+								pos.getY2(), (pos.getX2() - 1) % 7, pos.getY2(), !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
@@ -280,6 +318,21 @@ public class TreeNode {
 		}
 		for (int i = 0; i < possibleMoves.size(); i++) {
 			possibleMoves.get(i).parent = this;
+		}
+		
+		// Okay the following is important
+		// Imagine we set the depth to 2
+		// we start at root and create its children, the children save a memory of 1
+		// then the children create new children of their own which have a depth of 0
+		// If we now want to evaluate the children values - we can't!
+		// the evaluation depends on the possible options(!) of said children
+		// so we have to add another round of children (which I don't see a way around sadly)
+		// also not sure whether we to compare options further but I guess not(?)
+		
+		if (pos.isP1()) {
+			this.getData().setHeurVal(possibleMoves.size());
+		} else {
+			this.getData().setHeurVal(-(possibleMoves.size()));
 		}
 		return possibleMoves;
 	}
