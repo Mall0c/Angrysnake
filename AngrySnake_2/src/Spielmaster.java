@@ -31,7 +31,7 @@ public class Spielmaster {
 			break;
 		}
 		String eingabe = "";
-		// Spielablauf: Wird von Pascal programmiert
+		/*
 		while (true) {
 			System.out.println(spielfeld.printField());
 			if (!spielfeld._isRunning(this.spieler1)) {
@@ -68,7 +68,11 @@ public class Spielmaster {
 				gueltigerZug = spieler2.zugMachen(eingabe);
 			}
 			gueltigerZug = false;
-		}
+		}*/
+		boardVal k = new boardVal(0,3,6,3,0,0,false);
+		@SuppressWarnings("unused")
+		TreeNode y = new TreeNode(k,3,this.spielfeld.getGameField());
+		System.out.println();
 	}
 	
 	public boolean isRunning() {
