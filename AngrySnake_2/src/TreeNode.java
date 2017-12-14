@@ -7,7 +7,7 @@ public class TreeNode {
 	private ArrayList<TreeNode> children;
 
 	private int depth;
-	private char[][] ogBoard;
+	private static char[][] ogBoard;
 
 	// this is the main constructor which builds our root
 	// it requires the already filled board to generate a correct tree
@@ -66,7 +66,7 @@ public class TreeNode {
 	}
 
 	private char[][] reconstructBoard(char[][] field, TreeNode node) {
-		if (isRoot()) {
+		if (node.isRoot()) {
 			return field;
 		} else {
 			if (node.getData().isP1()) {
@@ -132,14 +132,14 @@ public class TreeNode {
 					}
 					// right
 					if (field[(pos.getX1() + 1 + 7) % 7][(pos.getY1() + 1 + 7) % 7] == ' ') {
-						boardVal nVal = new boardVal(((pos.getX1() + 1) % 7 + 7), ((pos.getY1() + 1 + 7) % 7), pos.getX2(),
+						boardVal nVal = new boardVal(((pos.getX1() + 1 + 7) % 7), ((pos.getY1() + 1 + 7) % 7), pos.getX2(),
 								pos.getY2(), pos.getX1(), (pos.getY1() + 1 + 7) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
 					}
 					// left
 					if (field[(pos.getX1() - 1 + 7) % 7][(pos.getY1() + 1 + 7) % 7] == ' ') {
-						boardVal nVal = new boardVal(((pos.getX1() - 1) % 7 + 7), ((pos.getY1() + 1 + 7) % 7), pos.getX2(),
+						boardVal nVal = new boardVal(((pos.getX1() - 1 + 7) % 7), ((pos.getY1() + 1 + 7) % 7), pos.getX2(),
 								pos.getY2(), pos.getX1(), (pos.getY1() + 1 + 7) % 7, !pos.isP1());
 						TreeNode n = new TreeNode(nVal, depth - 1);
 						possibleMoves.add(n);
