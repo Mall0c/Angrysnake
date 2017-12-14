@@ -66,7 +66,7 @@ public class TreeNode {
 	}
 
 	private char[][] reconstructBoard(char[][] field, TreeNode node) {
-		if (node.isRoot()) {
+		if (node.isRoot()) { 
 			return field;
 		} else {
 			if (node.getData().isP1()) {
