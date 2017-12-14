@@ -7,7 +7,7 @@ public class TreeNode {
 	private ArrayList<TreeNode> children;
 
 	private int depth;
-	private char[][] ogBoard;
+	private static char[][] ogBoard;
 
 	// this is the main constructor which builds our root
 	// it requires the already filled board to generate a correct tree
