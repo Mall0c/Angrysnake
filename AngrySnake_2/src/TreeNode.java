@@ -51,7 +51,7 @@ public class TreeNode {
 	// obviously this shit is recursive
 
 	public void buildTree() {
-		if (this.depth > 0) {
+		if (this.depth > 1) {
 			for (int i = 0; i < getChildren().size(); i++) {
 				TreeNode childNode = getChildren().get(i);
 				childNode.setChildren(childNode.possibleMoves(reconstructBoard(childNode), childNode.getData(), childNode.getDepth()));
@@ -179,7 +179,7 @@ public class TreeNode {
 	private ArrayList<TreeNode> possibleMoves(char[][] field, boardVal pos, int depth) {
 		ArrayList<TreeNode> possibleMoves = new ArrayList<TreeNode>();
 
-		if (depth >= 0) {
+		if (depth > 0) {
 			if (!pos.isP1()) { // actually, this is the path the program takes if it's P1's turn
 				// top
 				if (field[pos.getX1()][(pos.getY1() + 1 + 7) % 7] == ' ') {

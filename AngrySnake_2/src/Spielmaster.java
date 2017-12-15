@@ -71,7 +71,7 @@ public class Spielmaster {
 		}*/
 		boardVal k = new boardVal(0,3,6,3,0,0,false);
 		@SuppressWarnings("unused")
-		TreeNode y = new TreeNode(k,3,this.spielfeld.getGameField());
+		TreeNode y = new TreeNode(k,4,this.spielfeld.getGameField());
 		System.out.println();
 	}
 	
