@@ -8,7 +8,9 @@ public class Spieler {
 	private Spielfeld spielfeld;
 	private int typ;
 	private int xKopf;
+	private int xLast;
 	private int yKopf;
+	private int yLast;
 	private char kopfToken;
 	private char schlangeToken;
 	
@@ -56,6 +58,14 @@ public class Spieler {
 		return this.yKopf;
 	}
 	
+	public int getXLast() {
+		return this.xLast;
+	}
+	
+	public int getYLast() {
+		return this.yLast;
+	}
+	
 	public int getSpielerNummer() {
 		return this.spielerNummer;
 	}
@@ -66,6 +76,14 @@ public class Spieler {
 	
 	public void setYKopf(int value) {
 		this.yKopf = value;
+	}
+	
+	public void setXLast(int value) {
+		this.xLast = value;
+	}
+	
+	public void setYLast(int value) {
+		this.yLast = value;
 	}
 	
 	public String getName() {
@@ -165,6 +183,8 @@ public class Spieler {
 			this.spielfeld.setField(this.xKopf, this.yKopf, this.schlangeToken);
 			this.spielfeld.setField(erstesZeichen, zweitesZeichen, this.schlangeToken);
 			this.spielfeld.setField(drittesZeichen, viertesZeichen, this.kopfToken);
+			this.xLast = erstesZeichen;
+			this.yLast = zweitesZeichen;
 			this.xKopf = drittesZeichen;
 			this.yKopf = viertesZeichen;
 			return true;
@@ -197,6 +217,8 @@ public class Spieler {
 					this.xKopf = (this.xKopf+1+7)%7;
 					break;
 				}
+				this.xLast = this.xKopf;
+				this.yLast = this.yKopf;
 				switch(zweitesZeichen) {
 				case 'W':
 					this.spielfeld.setField(this.xKopf, (this.yKopf+1+7)%7, this.kopfToken);
