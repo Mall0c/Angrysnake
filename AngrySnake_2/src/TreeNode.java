@@ -121,7 +121,8 @@ public class TreeNode {
 			}
 		}
 	}
-	
+	// if there are more than 1 children with the same heurVal to be chosen, this method chooses a random one
+	// @return: the move to be done, e.g. A5B5
 	public String getMove() {
 		int heurVal = this.getData().heurVal;
 		int i = 0;
