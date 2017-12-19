@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TreeNode {
 
@@ -9,6 +10,7 @@ public class TreeNode {
 
 	private int depth;
 	private static char[][] ogBoard;
+	private static ArrayList<TreeNode> leafList = new ArrayList<>();
 
 	// this is the main constructor which builds our root
 	// it requires the already filled board to generate a correct tree
@@ -23,8 +25,8 @@ public class TreeNode {
 		setOgBoard(board);
 		setChildren(possibleMoves(getOgBoard(), getData(), getDepth()));
 		buildTree();
-		//this.foo();
-		getData().setHeurVal(alphabeta(this, depth));
+		this.foo();
+		//getData().setHeurVal(alphabeta(this, depth));
 		// well somehow we need to convert the integer value to a move
 		// will do that later
 		// search kids for integer value, select said child and read its data to get
@@ -51,7 +53,7 @@ public class TreeNode {
 	// obviously this shit is recursive
 
 	public void buildTree() {
-		if (this.depth > 1) {
+		if (this.depth > 0) {
 			for (int i = 0; i < getChildren().size(); i++) {
 				TreeNode childNode = getChildren().get(i);
 				childNode.setChildren(childNode.possibleMoves(reconstructBoard(childNode), childNode.getData(), childNode.getDepth()));
@@ -91,7 +93,10 @@ public class TreeNode {
 	}
 
 	public void foo() {
-		if (this.depth > 1) {
+		if(this.depth==1) {
+//			System.out.println();
+		}
+		if (this.depth > 0) {
 			for (int i = 0; i < this.children.size(); i++) {
 				TreeNode temp = this.children.get(i);
 				temp.foo();
@@ -101,39 +106,52 @@ public class TreeNode {
 				heurVals[i] = this.children.get(i).data.heurVal;
 			}
 			if (this.data.isP1()) {
-				int max = Integer.MIN_VALUE;
-				for (int i : heurVals)
-					if (max < i)
-						max = i;
-				this.data.heurVal = max;
-			} else { 
 				int min = Integer.MAX_VALUE;
 				for (int i : heurVals)
 					if (min > i)
 						min = i;
 				this.data.heurVal = min;
-			}
-		} else if (depth == 1) {
-			int[] heurVals = new int[this.children.size()];
-			for(int i = 0; i < heurVals.length; i++) {
-				heurVals[i] = this.children.get(i).data.heurVal;
-			}
-			if (this.data.isP1()) {
+			} else {
 				int max = Integer.MIN_VALUE;
 				for (int i : heurVals)
 					if (max < i)
 						max = i;
 				this.data.heurVal = max;
-			} else { 
-				// That means: current node was a move of P1. Now he wants to minimize the possible
-				// moves of P2 by searching for the lowest heuristic value in the current node's children
-				int min = Integer.MAX_VALUE;
-				for (int i : heurVals)
-					if (min > i)
-						min = i;
-				this.data.heurVal = min;
+				System.out.println(max);
 			}
-			return;
+		}
+	}
+	
+	public String getMove() {
+		int heurVal = this.getData().heurVal;
+		int i = 0;
+		String answer = "";
+		if(heurVal == 0) {
+			System.out.println();
+		}
+		List<boardVal> valList = new ArrayList<>();
+		for(i = 0; i < this.getChildren().size(); i++) {
+			if(this.getChildren().get(i).getData().heurVal == heurVal) {
+				boardVal x = this.getChildren().get(i).getData();
+				valList.add(x);
+			}
+		}
+		if(valList.size() == 1) {
+			boardVal x = valList.get(0);
+			System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal);
+			answer += (char)(x.z1+65);
+			answer += (char)(x.z2+49);
+			answer += (char)(x.x1+65);
+			answer += (char)(x.y1+49);
+			return answer;
+		} else {
+			boardVal x = valList.get((int)(Math.random()*valList.size()));
+			System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal, valList.size());
+			answer += (char)(x.z1+65);
+			answer += (char)(x.z2+49);
+			answer += (char)(x.x1+65);
+			answer += (char)(x.y1+49);
+			return answer;
 		}
 	}
 
@@ -179,7 +197,7 @@ public class TreeNode {
 	private ArrayList<TreeNode> possibleMoves(char[][] field, boardVal pos, int depth) {
 		ArrayList<TreeNode> possibleMoves = new ArrayList<TreeNode>();
 
-		if (depth > 0) {
+		if (depth >= 0) {
 			if (!pos.isP1()) { // actually, this is the path the program takes if it's P1's turn
 				// top
 				if (field[pos.getX1()][(pos.getY1() + 1 + 7) % 7] == ' ') {
@@ -389,13 +407,13 @@ public class TreeNode {
 		// so we have to add another round of children (which I don't see a way around
 		// sadly)
 		// also not sure whether we to compare options further but I guess not(?)
-		//if (depth == 0) {
+		if (depth == 0) {
 			if (pos.isP1()) {
 				this.getData().setHeurVal(possibleMoves.size());
 			} else {
-				this.getData().setHeurVal(-(possibleMoves.size()));
+				this.getData().setHeurVal((possibleMoves.size()));
 			}
-		//}
+		}
 		return possibleMoves;
 	}
 

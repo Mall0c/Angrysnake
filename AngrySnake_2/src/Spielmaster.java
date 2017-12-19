@@ -1,4 +1,5 @@
 
+
 public class Spielmaster {
 
 	private Spieler spieler1;
@@ -31,9 +32,39 @@ public class Spielmaster {
 			break;
 		}
 		String eingabe = "";
-		/*
+		// ***********
+		boardVal k = new boardVal(4,2,4,3,0,0,false);
+		spieler1.setXKopf(4);
+		spieler1.setYKopf(2);
+		spieler2.setXKopf(4);
+		spieler2.setYKopf(3);
+		char[][] temp = spielfeld.getGameField();
+		temp[0][3] = '#';
+		temp[4][2] = 'O';
+		temp[4][3] = 'X';
+		temp[0][4] = '#';
+		temp[1][4] = '#';
+		temp[4][4] = '#';
+		temp[5][4] = '#';
+		temp[6][4] = '#';
+		temp[2][4] = '#';
+		temp[3][4] = '#';
+		temp[6][3] = '#';
+		temp[6][2] = '#';
+		temp[6][1] = '#';
+		temp[5][1] = '#';
+		temp[4][1] = '#';
+		temp[5][2] = '#';
+		temp[5][3] = '#';
+		//boardVal k = new boardVal(0,3,6,3,0,0,false);
+		@SuppressWarnings("unused")
+		TreeNode y = new TreeNode(k,2,this.spielfeld.getGameField());
+		// ***********
 		while (true) {
 			System.out.println(spielfeld.printField());
+			// ***********
+			//y.getMove();
+			// ***********
 			if (!spielfeld._isRunning(this.spieler1)) {
 				System.out.println(this.spieler2.getName() + " hat gewonnen.");
 				break;
@@ -46,7 +77,8 @@ public class Spielmaster {
 					+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler1.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
+				//eingabe = menue.getScanner().next();
+				eingabe = y.getMove();
 				gueltigerZug = spieler1.zugMachen(eingabe);
 			}
 			gueltigerZug = false;
@@ -68,11 +100,25 @@ public class Spielmaster {
 				gueltigerZug = spieler2.zugMachen(eingabe);
 			}
 			gueltigerZug = false;
+			// ***********
+			k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+			y = new TreeNode(k,2,this.spielfeld.getGameField());
+			// ***********
+		}
+		/*while(true) {
+			System.out.println(spielfeld.printField());
+			while (!gueltigerZug) {
+				eingabe = menue.getScanner().next();
+				gueltigerZug = spieler1.zugMachen(eingabe);
+			}
+			gueltigerZug = false;
+			System.out.println(spielfeld.printField());
+			while (!gueltigerZug) {
+				eingabe = menue.getScanner().next();
+				gueltigerZug = spieler2.zugMachen(eingabe);
+			}
+			gueltigerZug = false;
 		}*/
-		boardVal k = new boardVal(0,3,6,3,0,0,false);
-		@SuppressWarnings("unused")
-		TreeNode y = new TreeNode(k,4,this.spielfeld.getGameField());
-		System.out.println();
 	}
 	
 	public boolean isRunning() {
