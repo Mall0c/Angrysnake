@@ -33,7 +33,7 @@ public class Spielmaster {
 		}
 		String eingabe = "";
 		// ***********
-		boardVal k = new boardVal(4,2,4,3,0,0,false);
+		/*boardVal k = new boardVal(4,2,4,3,0,0,false);
 		spieler1.setXKopf(4);
 		spieler1.setYKopf(2);
 		spieler2.setXKopf(4);
@@ -55,8 +55,8 @@ public class Spielmaster {
 		temp[5][1] = '#';
 		temp[4][1] = '#';
 		temp[5][2] = '#';
-		temp[5][3] = '#';
-		//boardVal k = new boardVal(0,3,6,3,0,0,false);
+		temp[5][3] = '#';*/
+		boardVal k = new boardVal(0,3,6,3,0,0,false);
 		@SuppressWarnings("unused")
 		TreeNode y = new TreeNode(k,2,this.spielfeld.getGameField());
 		// ***********
