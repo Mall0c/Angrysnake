@@ -83,12 +83,12 @@ public class Spielmaster {
 			}
 			gueltigerZug = false;
 			System.out.println(spielfeld.printField());
-			if (!spielfeld._isRunning(this.spieler1)) {
-				System.out.println(this.spieler2.getName() + " hat gewonnen.");
-				break;
-			}
 			if (!spielfeld._isRunning(this.spieler2)) {
 				System.out.println(this.spieler1.getName() + " hat gewonnen.");
+				break;
+			}
+			if (!spielfeld._isRunning(this.spieler1)) {
+				System.out.println(this.spieler2.getName() + " hat gewonnen.");
 				this.victor = true;
 				break;
 			}
