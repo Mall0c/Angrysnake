@@ -1,7 +1,7 @@
 
 public class Startklasse {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		
 		new Spielmaster();

@@ -11,6 +11,7 @@ public class TreeNode {
 	private int depth;
 	private static char[][] ogBoard;
 	private static ArrayList<TreeNode> leafList = new ArrayList<>();
+	private static boolean isFirst;
 
 	// this is the main constructor which builds our root
 	// it requires the already filled board to generate a correct tree
@@ -24,6 +25,8 @@ public class TreeNode {
 		setDepth(depth);
 		setOgBoard(board);
 		setChildren(possibleMoves(getOgBoard(), getData(), getDepth()));
+		if(parent == null)
+			setFirst(data.isP1());
 		buildTree();
 		this.foo();
 		//getData().setHeurVal(alphabeta(this, depth));
@@ -93,9 +96,6 @@ public class TreeNode {
 	}
 
 	public void foo() {
-		if(this.depth==1) {
-//			System.out.println();
-		}
 		if (this.depth > 0) {
 			for (int i = 0; i < this.children.size(); i++) {
 				TreeNode temp = this.children.get(i);
@@ -105,19 +105,34 @@ public class TreeNode {
 			for(int i = 0; i < heurVals.length; i++) {
 				heurVals[i] = this.children.get(i).data.heurVal;
 			}
-			if (this.data.isP1()) {
-				int min = Integer.MAX_VALUE;
-				for (int i : heurVals)
-					if (min > i)
-						min = i;
-				this.data.heurVal = min;
+			if(isFirst()) {
+				if (this.data.isP1()) {
+					int max = Integer.MIN_VALUE;
+					for (int i : heurVals)
+						if (max < i)
+							max = i;
+					this.data.heurVal = max;
+				} else {
+					int min = Integer.MAX_VALUE;
+					for (int i : heurVals)
+						if (min > i)
+							min = i;
+					this.data.heurVal = min;
+				}
 			} else {
-				int max = Integer.MIN_VALUE;
-				for (int i : heurVals)
-					if (max < i)
-						max = i;
-				this.data.heurVal = max;
-				System.out.println(max);
+				if (this.data.isP1()) {
+					int min = Integer.MAX_VALUE;
+					for (int i : heurVals)
+						if (min > i)
+							min = i;
+					this.data.heurVal = min;
+				} else {
+					int max = Integer.MIN_VALUE;
+					for (int i : heurVals)
+						if (max < i)
+							max = i;
+					this.data.heurVal = max;
+				}
 			}
 		}
 	}
@@ -139,19 +154,35 @@ public class TreeNode {
 		}
 		if(valList.size() == 1) {
 			boardVal x = valList.get(0);
-			System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal);
-			answer += (char)(x.z1+65);
-			answer += (char)(x.z2+49);
-			answer += (char)(x.x1+65);
-			answer += (char)(x.y1+49);
+			if(x.p1) {
+				System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal, valList.size());
+				answer += (char)(x.z1+65);
+				answer += (char)(x.z2+49);
+				answer += (char)(x.x1+65);
+				answer += (char)(x.y1+49);
+			} else {
+				System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x2, x.y2, x.heurVal, valList.size());
+				answer += (char)(x.z1+65);
+				answer += (char)(x.z2+49);
+				answer += (char)(x.x2+65);
+				answer += (char)(x.y2+49);
+			}
 			return answer;
 		} else {
 			boardVal x = valList.get((int)(Math.random()*valList.size()));
-			System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal, valList.size());
-			answer += (char)(x.z1+65);
-			answer += (char)(x.z2+49);
-			answer += (char)(x.x1+65);
-			answer += (char)(x.y1+49);
+			if(x.p1) {
+				System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x1, x.y1, x.heurVal, valList.size());
+				answer += (char)(x.z1+65);
+				answer += (char)(x.z2+49);
+				answer += (char)(x.x1+65);
+				answer += (char)(x.y1+49);
+			} else {
+				System.out.printf("z1:%d z2:%d x:%d y:%d heurVal:%d auswahl: %d \n", x.z1, x.z2, x.x2, x.y2, x.heurVal, valList.size());
+				answer += (char)(x.z1+65);
+				answer += (char)(x.z2+49);
+				answer += (char)(x.x2+65);
+				answer += (char)(x.y2+49);
+			}
 			return answer;
 		}
 	}
@@ -412,7 +443,7 @@ public class TreeNode {
 			if (pos.isP1()) {
 				this.getData().setHeurVal(possibleMoves.size());
 			} else {
-				this.getData().setHeurVal((possibleMoves.size()));
+				this.getData().setHeurVal(possibleMoves.size());
 			}
 		}
 		return possibleMoves;
@@ -468,5 +499,13 @@ public class TreeNode {
 
 	public void setDepth(int depth) {
 		this.depth = depth;
+	}
+
+	public static boolean isFirst() {
+		return isFirst;
+	}
+
+	public static void setFirst(boolean isFirst) {
+		TreeNode.isFirst = isFirst;
 	}
 }

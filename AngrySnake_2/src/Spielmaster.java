@@ -1,70 +1,39 @@
-
-
 public class Spielmaster {
 
 	private Spieler spieler1;
 	private Spieler spieler2;
 	private Spielfeld spielfeld;
 	private boolean victor = false; // wird true gesetzt, wenn Spieler1 gewinnt
-	public Spielmaster() {
+	public Spielmaster() throws InterruptedException {
 		this.spiel();
 	}
 
-	public void spiel() {
+	public void spiel() throws InterruptedException {
 		boolean gueltigerZug = false;
 		Menu menue = new Menu();
 		int anzahlSpieler = menue.getPlayerCount();
 		spielfeld = new Spielfeld(menue.getStoneCount());
 		switch (anzahlSpieler) {
 		case 0:
-			this.spieler1 = new Computerspieler(menue.getName1(), Spieler.types.COMP.ordinal(), menue.getAiLevel01(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getAiLevel02(), spielfeld);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.COMP.ordinal(), spielfeld, false);
 			break;
 		case 1:
-			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld);
-			this.spieler2 = new Computerspieler(menue.getName2(), Spieler.types.COMP.ordinal(), menue.getAiLevel01(),spielfeld);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(),spielfeld, false);
 			break;
 		// Ob die Eingabe korrekt ist, wird in Menue geprüft, also kann hier default
 		// genommen werden
 		default:
-			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld);
-			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(), spielfeld);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld, true);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(), spielfeld, false);
 			break;
 		}
 		String eingabe = "";
-		// ***********
-		/*boardVal k = new boardVal(4,2,4,3,0,0,false);
-		spieler1.setXKopf(4);
-		spieler1.setYKopf(2);
-		spieler2.setXKopf(4);
-		spieler2.setYKopf(3);
-		char[][] temp = spielfeld.getGameField();
-		temp[0][3] = '#';
-		temp[4][2] = 'O';
-		temp[4][3] = 'X';
-		temp[0][4] = '#';
-		temp[1][4] = '#';
-		temp[4][4] = '#';
-		temp[5][4] = '#';
-		temp[6][4] = '#';
-		temp[2][4] = '#';
-		temp[3][4] = '#';
-		temp[6][3] = '#';
-		temp[6][2] = '#';
-		temp[6][1] = '#';
-		temp[5][1] = '#';
-		temp[4][1] = '#';
-		temp[5][2] = '#';
-		temp[5][3] = '#';*/
 		boardVal k = new boardVal(0,3,6,3,0,0,false);
-		@SuppressWarnings("unused")
-		TreeNode y = new TreeNode(k,2,this.spielfeld.getGameField());
-		// ***********
+		TreeNode y = new TreeNode(k,6,this.spielfeld.getGameField());
 		while (true) {
 			System.out.println(spielfeld.printField());
-			// ***********
-			//y.getMove();
-			// ***********
 			if (!spielfeld._isRunning(this.spieler1)) {
 				System.out.println(this.spieler2.getName() + " hat gewonnen.");
 				break;
@@ -77,9 +46,27 @@ public class Spielmaster {
 					+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler1.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
-				//eingabe = menue.getScanner().next();
-				eingabe = y.getMove();
+				if(anzahlSpieler == 2) {
+					eingabe = menue.getScanner().next();
+					//eingabe = y.getMove();
+				} else if(anzahlSpieler == 1) {
+					if(spieler1.getTyp() == 0) { // Human
+						eingabe = menue.getScanner().next();
+					} else { // Computer
+						eingabe = y.getMove();
+					}
+				} else {
+					eingabe = y.getMove();
+						Thread.sleep(2000);
+				}
 				gueltigerZug = spieler1.zugMachen(eingabe);
+			}
+			if(anzahlSpieler == 1 && spieler2.getTyp() == 1) {
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true);
+				y = new TreeNode(k,6,this.spielfeld.getGameField());
+			} else if(anzahlSpieler == 0) {
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true);
+				y = new TreeNode(k,6,this.spielfeld.getGameField());
 			}
 			gueltigerZug = false;
 			System.out.println(spielfeld.printField());
@@ -96,29 +83,29 @@ public class Spielmaster {
 			+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler2.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
+				if(anzahlSpieler == 2) {
+					eingabe = menue.getScanner().next();
+				} else if(anzahlSpieler == 1) {
+					if(spieler2.getTyp() == 0) { // Human
+						eingabe = menue.getScanner().next();
+					} else { // Computer
+						eingabe = y.getMove();
+					}
+				} else {
+					eingabe = y.getMove();
+						Thread.sleep(2000);
+				}
 				gueltigerZug = spieler2.zugMachen(eingabe);
 			}
+			if(anzahlSpieler == 1 && spieler1.getTyp() == 1) {
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+				y = new TreeNode(k,6,this.spielfeld.getGameField());
+			} else if(anzahlSpieler == 0) {
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+				y = new TreeNode(k,6,this.spielfeld.getGameField());
+			}
 			gueltigerZug = false;
-			// ***********
-			k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
-			y = new TreeNode(k,2,this.spielfeld.getGameField());
-			// ***********
 		}
-		/*while(true) {
-			System.out.println(spielfeld.printField());
-			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
-				gueltigerZug = spieler1.zugMachen(eingabe);
-			}
-			gueltigerZug = false;
-			System.out.println(spielfeld.printField());
-			while (!gueltigerZug) {
-				eingabe = menue.getScanner().next();
-				gueltigerZug = spieler2.zugMachen(eingabe);
-			}
-			gueltigerZug = false;
-		}*/
 	}
 	
 	public boolean isRunning() {

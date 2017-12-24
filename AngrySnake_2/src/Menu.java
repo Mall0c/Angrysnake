@@ -49,7 +49,7 @@ public class Menu {
 				aiLevel01 = scanner.nextInt();
 			} while (!setAiLevel01(getScannerInt()));
 			System.out.print("Enter name for player: ");
-			setName1(scanner.next());
+			setName2(scanner.next());
 			break;
 		case 2:
 			System.out.print("Enter name for player 1: ");

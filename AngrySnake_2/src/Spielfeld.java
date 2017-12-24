@@ -152,7 +152,7 @@ public class Spielfeld {
 				return true;
 			}
 		}
-		if(spieler.getAnzahlMaulwuerfe() > 0) {
+		if(spieler.getAnzahlMaulwuerfe() > 0 && spieler.getTyp() == 0) {
 			return true; // snake can't move but moles can be placed
 		}
 		return false;
