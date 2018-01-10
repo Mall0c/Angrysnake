@@ -46,7 +46,6 @@ public class Menu {
 			// loop runs until the entered number is correct, setAiLevel01(int) also checks the validity
 			do {
 				System.out.print("Please enter ai level or computer 1 (Choose a level between 0 and " + maxAiLevel + "): ");
-				aiLevel01 = scanner.nextInt();
 			} while (!setAiLevel01(getScannerInt()));
 			System.out.print("Enter name for player: ");
 			setName2(scanner.next());
