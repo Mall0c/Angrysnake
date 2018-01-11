@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TreeNode {
@@ -10,7 +9,6 @@ public class TreeNode {
 
 	private int depth;
 	private static char[][] ogBoard;
-	private static ArrayList<TreeNode> leafList = new ArrayList<>();
 	private static boolean isFirst;
 
 	// this is the main constructor which builds our root
@@ -187,39 +185,7 @@ public class TreeNode {
 		}
 	}
 
-	// google alpha-beta pruning cause that's what it does
-	// returns an integer which will travel up to root
 
-	private int alphabeta(TreeNode node, int depth) {
-		return alphabeta(node, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
-	}
-
-	private int alphabeta(TreeNode node, int depth, int alpha, int beta) {
-		if (depth == 0 || this.getChildren().size() == 0) {
-			return this.getData().getHeurVal();
-		}
-		if (this.getData().isP1()) {
-			int v = Integer.MIN_VALUE;
-			for (int i = 0; i < this.getChildren().size(); i++) {
-				v = Math.max(v, alphabeta(this.getChildren().get(i), depth - 1, alpha, beta));
-				alpha = Math.max(alpha, v);
-				if (beta <= alpha) {
-					break;
-				}
-			}
-			return v;
-		} else {
-			int v = Integer.MAX_VALUE;
-			for (int i = 0; i < this.getChildren().size(); i++) {
-				v = Math.min(v, alphabeta(this.getChildren().get(i), depth - 1, alpha, beta));
-				beta = Math.max(beta, v);
-				if (beta <= alpha) {
-					break;
-				}
-			}
-			return v;
-		}
-	}
 
 	// generates the possibleMoves for a single node and saves them as arrayList
 	// there isn't much happening here really
@@ -490,7 +456,7 @@ public class TreeNode {
 	}
 
 	public void setOgBoard(char[][] baseField) {
-		this.ogBoard = baseField;
+		ogBoard = baseField;
 	}
 
 	public int getDepth() {

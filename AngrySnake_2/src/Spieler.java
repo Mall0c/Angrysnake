@@ -1,7 +1,7 @@
 
 public class Spieler {
 
-	private static int anzahlSpieler = 0; // to distinguish players	
+	public static int anzahlSpieler = 0; // to distinguish players	
 	private int spielerNummer;
 	private int anzahlMaulwuerfe = 2;
 	private String name;
@@ -15,23 +15,15 @@ public class Spieler {
 	private char kopfToken;
 	private char schlangeToken;
 	
-	public Spieler(String name, int typ, Spielfeld spielfeld, boolean first){
+	public Spieler(String name, int typ, Spielfeld spielfeld, boolean first, char kopfToken, char schlangeToken, int xKopf, int yKopf){
 		this.name = name;
 		this.typ = typ;
 		this.start = first;
 		this.spielfeld = spielfeld;
-		this.spielerNummer = ++anzahlSpieler;
-		if(this.spielerNummer == 1) {
-			this.kopfToken = 'O';
-			this.schlangeToken = '+';
-			this.xKopf = 0;
-			this.yKopf = 3;
-		} else {
-			this.kopfToken = 'X';
-			this.schlangeToken = '-';
-			this.xKopf = 6;
-			this.yKopf = 3;
-		}
+		this.kopfToken = kopfToken;
+		this.schlangeToken = schlangeToken;
+		this.xKopf = xKopf;
+		this.yKopf = yKopf;;
 	}
 	
 	public char getKopfToken() {
@@ -117,10 +109,10 @@ public class Spieler {
 				System.out.print("Eingegebene Koordinaten befinden sich nicht im Spielfeld. Erneut eingeben: ");
 				return false;
 			}
-			// Erste Koordinate prüfen
+			// Erste Koordinate prï¿½fen
 			if ((Math.abs(erstesZeichen - xKopf) == 1 || Math.abs(erstesZeichen - xKopf) == 6) && (zweitesZeichen - yKopf) == 0 || 
 					(Math.abs(zweitesZeichen - yKopf) == 1 || Math.abs(zweitesZeichen - yKopf) == 6) && erstesZeichen - xKopf == 0) {
-				// Zweite Koordinate prüfen
+				// Zweite Koordinate prï¿½fen
 				if((Math.abs(drittesZeichen - erstesZeichen) == 1 || Math.abs(drittesZeichen - erstesZeichen) == 6) && (viertesZeichen - zweitesZeichen) == 0 || 
 						(Math.abs(viertesZeichen - zweitesZeichen) == 1 || Math.abs(viertesZeichen - zweitesZeichen) == 6) && drittesZeichen - erstesZeichen == 0) {
 					if(this.spielfeld.getGameField()[erstesZeichen][zweitesZeichen] == ' ' && this.spielfeld.getGameField()[drittesZeichen][viertesZeichen] == ' ') {
@@ -149,7 +141,7 @@ public class Spieler {
 					return false;
 				}
 				if(this.getAnzahlMaulwuerfe() <= 0) {
-					System.out.print("Keine Maulwürfe mehr vorhanden. Erneut eingeben: ");
+					System.out.print("Keine Maulwï¿½rfe mehr vorhanden. Erneut eingeben: ");
 					return false;
 				}
 				return true;
@@ -157,7 +149,7 @@ public class Spieler {
 					(zweitesZeichen+49 == 'W' || zweitesZeichen+49 == 'A' || zweitesZeichen+49 == 'S' || zweitesZeichen+49 == 'D') ) {
 				erstesZeichen += 65;
 				zweitesZeichen += 49;
-				int xKopfTemp = this.xKopf; // Nötig für das zweite Switch-case
+				int xKopfTemp = this.xKopf; // Nï¿½tig fï¿½r das zweite Switch-case
 				int yKopfTemp = this.yKopf; // da Schlange bewegt wird
 				switch(erstesZeichen) {
 					case 'W': if(this.spielfeld.getGameField()[this.xKopf][(this.yKopf+1+7)%7] == ' ') { yKopfTemp = (this.yKopf+1+7)%7; break; }return false;
@@ -173,7 +165,7 @@ public class Spieler {
 				}
 				return true;
 			} else {
-				System.out.print("Eingabe ungültig. Bitte erneut eingeben: ");
+				System.out.print("Eingabe ungï¿½ltig. Bitte erneut eingeben: ");
 				return false;
 			}
 		} // Cheats: 
@@ -245,16 +237,16 @@ public class Spieler {
 					System.out.print("Eingegebene Koordinaten befinden sich nicht im Spielfeld. Erneut eingeben: ");
 					return false;
 				}
-				// Erste Koordinate prüfen
+				// Erste Koordinate prï¿½fen
 				if ((Math.abs(erstesZeichen - xKopf) == 1 || Math.abs(erstesZeichen - xKopf) == 6) && (zweitesZeichen - yKopf) == 0 || 
 						(Math.abs(zweitesZeichen - yKopf) == 1 || Math.abs(zweitesZeichen - yKopf) == 6) && erstesZeichen - xKopf == 0) {
-					// Zweite Koordinate prüfen
+					// Zweite Koordinate prï¿½fen
 					if((Math.abs(drittesZeichen - erstesZeichen) == 1 || Math.abs(drittesZeichen - erstesZeichen) == 6) && (viertesZeichen - zweitesZeichen) == 0 || 
 							(Math.abs(viertesZeichen - zweitesZeichen) == 1 || Math.abs(viertesZeichen - zweitesZeichen) == 6) && drittesZeichen - erstesZeichen == 0) {
-						// Dritte Koordinate prüfen
+						// Dritte Koordinate prï¿½fen
 						if((Math.abs(fuenftesZeichen - drittesZeichen) == 1 || Math.abs(fuenftesZeichen - drittesZeichen) == 6) && (sechstesZeichen - viertesZeichen) == 0 || 
 								(Math.abs(sechstesZeichen - viertesZeichen) == 1 || Math.abs(sechstesZeichen - viertesZeichen) == 6) && fuenftesZeichen - drittesZeichen == 0) {
-							// Vierte Koordinate prüfen
+							// Vierte Koordinate prï¿½fen
 							if((Math.abs(siebtesZeichen - fuenftesZeichen) == 1 || Math.abs(siebtesZeichen - fuenftesZeichen) == 6) && (achtesZeichen - sechstesZeichen) == 0 || 
 									(Math.abs(achtesZeichen - sechstesZeichen) == 1 || Math.abs(achtesZeichen - sechstesZeichen) == 6) && siebtesZeichen - fuenftesZeichen == 0) {
 						if(this.spielfeld.getGameField()[erstesZeichen][zweitesZeichen] == ' ' && this.spielfeld.getGameField()[drittesZeichen][viertesZeichen] == ' '
@@ -278,7 +270,7 @@ public class Spieler {
 				return false;
 			}
 		}
-		System.out.print("Eingabe ungültig. Bitte erneut eingeben: ");
+		System.out.print("Eingabe ungï¿½ltig. Bitte erneut eingeben: ");
 		return false;
 	}
 	public boolean zugMachen(String eingabe) {

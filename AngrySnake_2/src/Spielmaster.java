@@ -15,18 +15,18 @@ public class Spielmaster {
 		spielfeld = new Spielfeld(menue.getStoneCount());
 		switch (anzahlSpieler) {
 		case 0:
-			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true);
-			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.COMP.ordinal(), spielfeld, false);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true, 'O', '+', 0, 3);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.COMP.ordinal(), spielfeld, false, 'X', '-', 6, 3);
 			break;
 		case 1:
-			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true);
-			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(),spielfeld, false);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.COMP.ordinal(), spielfeld, true, 'O', '+', 0, 3);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(),spielfeld, false, 'X', '-', 6, 3);
 			break;
-		// Ob die Eingabe korrekt ist, wird in Menue geprüft, also kann hier default
+		// Ob die Eingabe korrekt ist, wird in Menue geprï¿½ft, also kann hier default
 		// genommen werden
 		default:
-			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld, true);
-			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(), spielfeld, false);
+			this.spieler1 = new Spieler(menue.getName1(), Spieler.types.HUMAN.ordinal(), spielfeld, true, 'O', '+', 0, 3);
+			this.spieler2 = new Spieler(menue.getName2(), Spieler.types.HUMAN.ordinal(), spielfeld, false, 'X', '-', 6, 3);
 			break;
 		}
 		String eingabe = "";
@@ -42,7 +42,7 @@ public class Spielmaster {
 				System.out.println(this.spieler1.getName() + " hat gewonnen.");
 				break;
 			}
-			System.out.println("Maulwürfe: " + this.spieler1.getName() + ": " + this.spieler1.getAnzahlMaulwuerfe()
+			System.out.println("Maulwï¿½rfe: " + this.spieler1.getName() + ": " + this.spieler1.getAnzahlMaulwuerfe()
 					+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler1.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
@@ -79,7 +79,7 @@ public class Spielmaster {
 				this.victor = true;
 				break;
 			}
-			System.out.println("Maulwürfe: " + this.spieler1.getName() + ": " + this.spieler1.getAnzahlMaulwuerfe()
+			System.out.println("Maulwï¿½rfe: " + this.spieler1.getName() + ": " + this.spieler1.getAnzahlMaulwuerfe()
 			+ " " + this.spieler2.getName() + ": " + this.spieler2.getAnzahlMaulwuerfe());
 			System.out.print(this.spieler2.getName() + " ist am Zug: ");
 			while (!gueltigerZug) {
