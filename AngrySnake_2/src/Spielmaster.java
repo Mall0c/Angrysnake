@@ -30,7 +30,7 @@ public class Spielmaster {
 			break;
 		}
 		String eingabe = "";
-		boardVal k = new boardVal(0,3,6,3,0,0,false);
+		boardVal k = new boardVal(0,3,6,3,0,0,false,2,2);
 		TreeNode y = new TreeNode(k,6,this.spielfeld.getGameField());
 		while (true) {
 			System.out.println(spielfeld.printField());
@@ -62,10 +62,10 @@ public class Spielmaster {
 				gueltigerZug = spieler1.zugMachen(eingabe);
 			}
 			if(anzahlSpieler == 1 && spieler2.getTyp() == 1) {
-				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true);
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
 				y = new TreeNode(k,6,this.spielfeld.getGameField());
 			} else if(anzahlSpieler == 0) {
-				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true);
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
 				y = new TreeNode(k,6,this.spielfeld.getGameField());
 			}
 			gueltigerZug = false;
@@ -98,10 +98,10 @@ public class Spielmaster {
 				gueltigerZug = spieler2.zugMachen(eingabe);
 			}
 			if(anzahlSpieler == 1 && spieler1.getTyp() == 1) {
-				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
 				y = new TreeNode(k,6,this.spielfeld.getGameField());
 			} else if(anzahlSpieler == 0) {
-				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+				k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
 				y = new TreeNode(k,6,this.spielfeld.getGameField());
 			}
 			gueltigerZug = false;

@@ -169,7 +169,7 @@ public class Spieler {
 				return false;
 			}
 		} // Cheats: 
-		else if(eingabe.substring(0, 5).equals("ODUS-")) {
+		else if(eingabe.length() > 5 && eingabe.substring(0, 5).equals("ODUS-")) {
 			if(eingabe.substring(5, eingabe.length()).length() == 4) {
 				String sub = eingabe.substring(5, eingabe.length());
 				int erstesZeichen = sub.charAt(0);

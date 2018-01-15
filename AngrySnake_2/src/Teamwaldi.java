@@ -36,13 +36,13 @@ public class Teamwaldi {
      
     public String yourMove() {
         if(start) {
-            boardVal k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false);
+            boardVal k = new boardVal(spieler1.getXKopf(), spieler1.getYKopf(), spieler2.getXKopf(), spieler2.getYKopf(), spieler2.getXLast(), spieler2.getYLast(), false, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
             TreeNode y = new TreeNode(k,6,this.spielfeld.getGameField());
             String move = y.getMove();
             spieler1.zugMachen(move);
             return move;
         } else {
-            boardVal k = new boardVal(spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXKopf(), spieler1.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true);
+            boardVal k = new boardVal(spieler2.getXKopf(), spieler2.getYKopf(), spieler1.getXKopf(), spieler1.getYKopf(), spieler1.getXLast(), spieler1.getYLast(), true, spieler1.getAnzahlMaulwuerfe(), spieler2.getAnzahlMaulwuerfe());
             TreeNode y = new TreeNode(k,6,this.spielfeld.getGameField());
             String move = y.getMove();
             spieler1.zugMachen(move);

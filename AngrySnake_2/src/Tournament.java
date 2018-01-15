@@ -20,15 +20,15 @@ public class Tournament {
             String enemyMove = "";
             while (true) {
                 if (teamwaldi_spieler.getStart()) {
-                	// boardVal & TreeNode erstellen, Zug machen + übergeben an den Wrapper
+                	// boardVal & TreeNode erstellen, Zug machen + Ã¼bergeben an den Wrapper
             		boardVal k = new boardVal(teamwaldi_spieler.getXKopf(),teamwaldi_spieler.getYKopf(),enemy_spieler.getXKopf(),
-            				enemy_spieler.getYKopf(),enemy_spieler.getXLast(),enemy_spieler.getYLast(),false);
+            				enemy_spieler.getYKopf(),enemy_spieler.getXLast(),enemy_spieler.getYLast(),false , teamwaldi_spieler.getAnzahlMaulwuerfe(), enemy_spieler.getAnzahlMaulwuerfe());
             		TreeNode y = new TreeNode(k,6,spielfeld.getGameField());
             		ourMove = y.getMove();
             		teamwaldi_spieler.zugMachen(ourMove);
             		enemy_wrapper.myMove(ourMove);
         			System.out.println(spielfeld.printField());
-        			// Prüfen isRunning, else break
+        			// PrÃ¼fen isRunning, else break
         			if (!spielfeld._isRunning(teamwaldi_spieler)) {
         				System.out.println(enemy_spieler.getName() + " hat gewonnen.");
         				break;
@@ -37,11 +37,13 @@ public class Tournament {
         				System.out.println(teamwaldi_spieler.getName() + " hat gewonnen.");
         				break;
         			}
+        			System.out.println("Maulwï¿½rfe: " + teamwaldi_spieler.getName() + ": " + teamwaldi_spieler.getAnzahlMaulwuerfe()
+					+ " " + enemy_spieler.getName() + ": " + enemy_spieler.getAnzahlMaulwuerfe());
                     // Wrapper nach yourMove fragen und eintragen
         			enemyMove = enemy_wrapper.yourMove();
         			enemy_spieler.zugMachen(enemyMove);
         			System.out.println(spielfeld.printField());
-                    // Prüfen isRunning, else break
+                    // PrÃ¼fen isRunning, else break
         			if (!spielfeld._isRunning(teamwaldi_spieler)) {
         				System.out.println(enemy_spieler.getName() + " hat gewonnen.");
         				break;
@@ -50,12 +52,16 @@ public class Tournament {
         				System.out.println(teamwaldi_spieler.getName() + " hat gewonnen.");
         				break;
         			}
+        			System.out.println("Maulwï¿½rfe: " + teamwaldi_spieler.getName() + ": " + teamwaldi_spieler.getAnzahlMaulwuerfe()
+					+ " " + enemy_spieler.getName() + ": " + enemy_spieler.getAnzahlMaulwuerfe());
                 } else {
                     // Wrapper nach yourMove fragen und eintragen              		
         			enemyMove = enemy_wrapper.yourMove();
         			enemy_spieler.zugMachen(enemyMove);
         			System.out.println(spielfeld.printField());
-                    // Prüfen isRunning, else break
+        			System.out.println("Maulwï¿½rfe: " + teamwaldi_spieler.getName() + ": " + teamwaldi_spieler.getAnzahlMaulwuerfe()
+					+ " " + enemy_spieler.getName() + ": " + enemy_spieler.getAnzahlMaulwuerfe());
+                    // PrÃ¼fen isRunning, else break
         			if (!spielfeld._isRunning(teamwaldi_spieler)) {
         				System.out.println(enemy_spieler.getName() + " hat gewonnen.");
         				break;
@@ -64,15 +70,15 @@ public class Tournament {
         				System.out.println(teamwaldi_spieler.getName() + " hat gewonnen.");
         				break;
         			}
-                	// boardVal & TreeNode erstellen, Zug machen + übergeben an den Wrapper
+                	// boardVal & TreeNode erstellen, Zug machen + Ã¼bergeben an den Wrapper
             		boardVal k = new boardVal(enemy_spieler.getXKopf(),enemy_spieler.getYKopf(),teamwaldi_spieler.getXKopf(),
-            				teamwaldi_spieler.getYKopf(),teamwaldi_spieler.getXLast(),teamwaldi_spieler.getYLast(),true);
+            				teamwaldi_spieler.getYKopf(),teamwaldi_spieler.getXLast(),teamwaldi_spieler.getYLast(),true, enemy_spieler.getAnzahlMaulwuerfe(), teamwaldi_spieler.getAnzahlMaulwuerfe());
             		TreeNode y = new TreeNode(k,6,spielfeld.getGameField());
             		ourMove = y.getMove();
             		enemy_wrapper.myMove(ourMove);
             		teamwaldi_spieler.zugMachen(ourMove);
         			System.out.println(spielfeld.printField());
-        			// Prüfen isRunning, else break
+        			// PrÃ¼fen isRunning, else break
         			if (!spielfeld._isRunning(teamwaldi_spieler)) {
         				System.out.println(enemy_spieler.getName() + " hat gewonnen.");
         				break;
@@ -81,6 +87,8 @@ public class Tournament {
         				System.out.println(teamwaldi_spieler.getName() + " hat gewonnen.");
         				break;
         			}
+        			System.out.println("Maulwï¿½rfe: " + teamwaldi_spieler.getName() + ": " + teamwaldi_spieler.getAnzahlMaulwuerfe()
+					+ " " + enemy_spieler.getName() + ": " + enemy_spieler.getAnzahlMaulwuerfe());
                 }
             }
         }
