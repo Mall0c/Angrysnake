@@ -191,6 +191,25 @@ public class TreeNode {
 				}
 			}
 		}
+		if (analyzeEnemyMovesDiagonal(enemy)) {
+			// against player 2
+			if (data.isP1()) {
+				if (data.getSP1Maulwuerfe() > 0) {
+					answer += (char) (enemy.get(0).getData().getX2() + 65);
+					answer += (char) (enemy.get(0).getData().getY2() + 49);
+					data.setSP1Maulwuerfe(data.getSP1Maulwuerfe() - 1);
+					return answer;
+				}
+				// against player 1
+			} else {
+				if (data.getSP2Maulwuerfe() > 0) {
+					answer += (char) (enemy.get(0).getData().getX1() + 65);
+					answer += (char) (enemy.get(0).getData().getY1() + 49);
+					data.setSP2Maulwuerfe(data.getSP2Maulwuerfe() - 1);
+					return answer;
+				}
+			}
+		}
 		List<boardVal> valList = new ArrayList<>();
 		for (i = 0; i < this.getChildren().size(); i++) {
 			if (this.getChildren().get(i).getData().heurVal == heurVal) {
@@ -626,6 +645,31 @@ public class TreeNode {
 			return true;
 		}
 		if (enemyMoves.size() == 1) {
+			return true;
+		}
+		return false;
+
+	}
+	
+	private boolean analyzeEnemyMovesDiagonal(ArrayList<TreeNode> enemyMoves) {
+		if (enemyMoves.size() == 2) {
+			for (int i = 0; i < (enemyMoves.size() - 1); i++) {
+				if (this.getData().isP1()) {
+					if (enemyMoves.get(i).getData().getX1() != enemyMoves.get(i + 1).getData().getX1()) {
+						return false;
+					}
+					if (enemyMoves.get(i).getData().getY1() != enemyMoves.get(i + 1).getData().getY1()) {
+						return false;
+					}	
+				} else {
+					if (enemyMoves.get(i).getData().getX2() != enemyMoves.get(i + 1).getData().getX2()) {
+						return false;
+					}
+					if (enemyMoves.get(i).getData().getY2() != enemyMoves.get(i + 1).getData().getY2()) {
+						return false;
+					}
+				}
+			}
 			return true;
 		}
 		return false;
