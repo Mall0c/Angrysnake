@@ -33,19 +33,19 @@ public class Menu {
 		case 0:
 			// loop runs until the entered number is correct, setAiLevel01(int) also checks the validity
 			do {
-				System.out.print("Please enter ai level or computer 1 (Choose a level between 0 and " + maxAiLevel + "): ");
+				System.out.print("Please enter ai level for computer 1 (Choose a level between 0 and " + maxAiLevel + "): ");
 			} while (!setAiLevel01(getScannerInt()));
 			
 			// loop runs until the entered number is correct, setAiLevel02(int) also checks the validity
 			do {
-				System.out.print("Please enter ai level or computer 2 (Choose a level between 0 and " + maxAiLevel + "): ");
+				System.out.print("Please enter ai level for computer 2 (Choose a level between 0 and " + maxAiLevel + "): ");
 			} while (!setAiLevel02(getScannerInt()));
 			break;
 			
 		case 1:
 			// loop runs until the entered number is correct, setAiLevel01(int) also checks the validity
 			do {
-				System.out.print("Please enter ai level or computer 1 (Choose a level between 0 and " + maxAiLevel + "): ");
+				System.out.print("Please enter ai level for computer 1 (Choose a level between 0 and " + maxAiLevel + "): ");
 			} while (!setAiLevel01(getScannerInt()));
 			System.out.print("Enter name for player: ");
 			setName2(scanner.next());
